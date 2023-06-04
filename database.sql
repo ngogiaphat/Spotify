@@ -1,6 +1,6 @@
 /**
 * USERS
-    * Note: This table contains user data. Users should only be able to view and update their own data.
+  * Note: This table contains user data. Users should only be able to view and update their own data.
 */
 create table users (
   -- UUID from auth.users
@@ -20,7 +20,7 @@ create policy "Can update own user data." on users
   for update using (auth.uid() = id);
 
 /**
-    * This trigger automatically creates a user entry when a new user signs up via Supabase Auth.
+  * This trigger automatically creates a user entry when a new user signs up via Supabase Auth.
 */
 create function public.handle_new_user()
 returns trigger as
@@ -37,8 +37,8 @@ create trigger on_auth_user_created
   for each row
     execute procedure public.handle_new_user();
 /**
-    * CUSTOMERS
-    * Note: this is a private table that contains a mapping of user IDs to Strip customer IDs.
+  * CUSTOMERS
+  * Note: this is a private table that contains a mapping of user IDs to Strip customer IDs.
 */
 create table customers (
   -- UUID from auth.users
@@ -50,8 +50,8 @@ alter table customers enable row level security;
 -- No policies as this is a private table that the user must not have access to.
 
 /**
-    * PRODUCTS
-    * Note: products are created and managed in Stripe and synced to our DB via Stripe webhooks.
+  * PRODUCTS
+  * Note: products are created and managed in Stripe and synced to our DB via Stripe webhooks.
 */
 create table products (
   -- Product ID from Stripe, e.g. prod_1234.
@@ -72,8 +72,8 @@ alter table products
 create policy "Allow public read-only access." on products
   for select using (true);
 /**
-    * PRICES
-    * Note: prices are created and managed in Stripe and synced to our DB via Stripe webhooks.
+  * PRICES
+  * Note: prices are created and managed in Stripe and synced to our DB via Stripe webhooks.
 */
 create type pricing_type as enum ('one_time', 'recurring');
 create type pricing_plan_interval as enum ('day', 'week', 'month', 'year');
@@ -106,8 +106,8 @@ alter table prices
 create policy "Allow public read-only access." on prices
   for select using (true);
 /**
-    * SUBSCRIPTIONS
-    * Note: subscriptions are created and managed in Stripe and synced to our DB via Stripe webhooks.
+  * SUBSCRIPTIONS
+  * Note: subscriptions are created and managed in Stripe and synced to our DB via Stripe webhooks.
 */
 create type subscription_status as enum ('trialing', 'active', 'canceled', 'incomplete', 'incomplete_expired', 'past_due', 'unpaid');
 create table subscriptions (
