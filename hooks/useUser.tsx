@@ -1,6 +1,6 @@
+import {UserDetails, Subscription} from "@/types";
 import {useEffect, useState, createContext, useContext} from "react";
 import {useUser as useSupaUser, useSessionContext, User} from "@supabase/auth-helpers-react";
-import {UserDetails, Subscription} from "@/types";
 type UserContextType = {
 	accessToken: string | null;
 	user: User | null;
@@ -24,12 +24,7 @@ export const MyUserContextProvider = (props: Props) => {
 	const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
 	const [subscription, setSubscription] = useState<Subscription | null>(null);
 	const getUserDetails = () => supabase.from("users").select("*").single();
-	const getSubcription = () => 
-		supabase
-			.from("subscriptions")
-			.select("*, prices(*, products(*))")
-			.in("status", ["trialing", "active"])
-			.single();
+	const getSubcription = () => supabase.from("subscriptions").select("*, prices(*, products(*))").in("status", ["trialing", "active"]).single();
 	useEffect(() => {
 		if(user && !isLoadingData && !userDetails && !subscription){
 			setIsloadingData(true);

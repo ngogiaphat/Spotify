@@ -11,7 +11,7 @@ const useSongById = (id?: string) => {
 			return;
 		};
 		setIsLoading(true);
-		const fetchSong = async () => {
+		const fetchSong = async() => {
 			const {data, error} = await supabaseClient.from("songs").select("*").eq("id", id).single();
 			if(error){
 				setIsLoading(false);
