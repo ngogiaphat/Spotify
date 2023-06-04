@@ -1,5 +1,5 @@
 import Modal from "./Modal";
-// import Stripe from "stripe";
+
 import Button from "./Button";
 import React, {useState} from "react";
 import {toast} from "react-hot-toast";
@@ -46,7 +46,7 @@ const SubscribeModal: React.FC<SubscribeModalProps> = ({
         url: '/api/create-checkout-session',
         data: { price }
       });
-      const stripe: Stripe | undefined = await getStripe();
+      const stripe = await getStripe();
       stripe?.redirectToCheckout({ sessionId });
     }
 		catch(error){
@@ -94,3 +94,4 @@ const SubscribeModal: React.FC<SubscribeModalProps> = ({
     </Modal>
   );
 };
+export default SubscribeModal;
